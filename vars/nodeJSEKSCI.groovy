@@ -91,15 +91,26 @@ def call(Map configMap){
             //here I need to configure downstram job. I have to pass package version for deployment
             // This job will wait until downstrem job is over
             // by default when a non-master branch CI is done, we can go for DEV development
+            // stage('Deploy') {
+            //     steps {
+            //         script{
+            //             echo "Deployment"
+            //             def params = [
+            //                 string(name: 'version', value: "$packageVersion"),
+            //                 string(name: 'environment', value: "dev")
+            //             ]
+            //             build job: "../${component}-deploy", wait: true, parameters: params
+            //         }
+            //     }
+            // }
             stage('Deploy') {
                 steps {
                     script{
-                        echo "Deployment"
-                        def params = [
-                            string(name: 'version', value: "$packageVersion"),
-                            string(name: 'environment', value: "dev")
-                        ]
-                        build job: "../${component}-deploy", wait: true, parameters: params
+                        sh """
+                        cd helm
+                        sed -i 's/IMAGE_VERSION/$packageVersion/g' values.yaml
+                        helm install $component . 
+                        """
                     }
                 }
             }
