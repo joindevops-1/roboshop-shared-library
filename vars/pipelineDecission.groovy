@@ -11,8 +11,8 @@ def decidePipleine(Map configMap){
         case 'JavaVM':
             javaVMCI(configMap)
             break
-        case 'nodeJSEKS':
-            nodeJSEKS(configMap)
+        case 'nodeJSEKSCI':
+            nodeJSEKSCI(configMap)
             break
         default:
             error "Un recognised application"
