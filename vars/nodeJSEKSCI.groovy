@@ -72,7 +72,7 @@ def call(Map configMap){
                 steps {
                     script{
                         sh """
-                        docker build -t joindevops/${component}:v1 .
+                        docker build -t joindevops/${component}:$packageVersion .
                         """
                     }
                 }
@@ -82,7 +82,7 @@ def call(Map configMap){
                 steps {
                     script{
                         sh """
-                        docker push joindevops/${component}:v1
+                        docker push joindevops/${component}:$packageVersion
                         """
                     }
                 }
